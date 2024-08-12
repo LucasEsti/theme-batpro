@@ -136,7 +136,7 @@ get_header("client"); ?>
         </div>
     </div>
 
-    <div class="floating-chat">
+    <div class="floating-chat hidden">
             <div class="new-message hidden">
                 <i class="fa-solid fa-1"></i>
             </div>

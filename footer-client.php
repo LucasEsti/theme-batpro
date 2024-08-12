@@ -198,6 +198,7 @@ if (get_field('version_page') == "en") {
         
         conn.onopen = function() {
             console.log('WebSocket connection opened');
+            $(".floating-chat").removeClass("hidden");
         };
         
         conn.onmessage = function(e) {
@@ -587,7 +588,6 @@ if (get_field('version_page') == "en") {
         }
     </script>
     
-    <script src="<?php echo $source; ?>style/chatbox.js"></script>
 </body>
 </html>
     
