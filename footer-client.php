@@ -167,9 +167,9 @@ if (get_field('version_page') == "en") {
         
         let connex = "";
         if (clientId !== undefined) {
-            connex = 'wss://batpro-madagascar.com/wp-admin/wp-content/themes/realtime-batpro/server?type=client&userId=' + clientId;
+            connex = 'wss://batpro-madagascar.com/wp-admin/wp-content/themes/theme-batpro/realtime-batpro/server?type=client&userId=' + clientId;
         } else {
-            connex = 'wss://batpro-madagascar.com/wp-admin/wp-content/themes/realtime-batpro/server?type=client';
+            connex = 'wss://batpro-madagascar.com/wp-admin/wp-content/themes/theme-batpro/realtime-batpro/server?type=client';
         }
         var conn = new WebSocket(connex);
         
