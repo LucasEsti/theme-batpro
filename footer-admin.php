@@ -10,7 +10,7 @@
     <script>
        
         
-        var ws = new WebSocket('ws://localhost:8080?type=admin');
+        var ws = new WebSocket('wss://batpro-madagascar.com/wp-admin/wp-content/themes/realtime-batpro/server?type=admin');
         function isObject(value) {
             return value !== null && typeof value === 'object' && value.constructor === Object;
         }

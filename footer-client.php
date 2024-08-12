@@ -16,9 +16,9 @@
         
         let connex = "";
         if (clientId !== undefined) {
-            connex = 'ws://localhost:8080?type=client&userId=' + clientId;
+            connex = 'wss://batpro-madagascar.com/wp-admin/wp-content/themes/realtime-batpro/server?type=client&userId=' + clientId;
         } else {
-            connex = 'ws://localhost:8080?type=client';
+            connex = 'wss://batpro-madagascar.com/wp-admin/wp-content/themes/realtime-batpro/server?type=client';
         }
         var conn = new WebSocket(connex);
         
