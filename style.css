@@ -1,0 +1,181 @@
+/*
+Theme Name: batpro
+Author: apolline*
+Author URI: apolline.mg
+*/
+
+#cartTop {
+  position: relative;
+  transform: scale(1);
+  opacity: 1;
+  visibility: visible;
+  transition: all ease-in-out 0.3s;
+  cursor: pointer;
+  transform-origin: bottom;
+  animation: chatHeadBounce 1.5s normal;
+  animation-timing-function: cubic-bezier(0.28, 0.84, 0.42, 1);
+}
+#cartTop.shake {
+  animation: chatHeadBounceX 1.5s normal;
+}
+#cartTop .cartIcon {
+}
+#cartTop .cartItemCount {
+  position: absolute;
+  display: block;
+  background: #fff;
+  border: 1px solid #0086cc;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  font-size: 11px;
+  line-height: 17px;
+  border-radius: 100%;
+  color: #0086cc;
+  /* box-shadow: 1px 1px 2px #1c3f52; */
+}
+.btns.outline {
+  border: 1px solid #5699d2;
+  color: #5699d2;
+  /* text-transform: uppercase; */
+  padding: 10px 20px;
+}
+
+.cartQte {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  border: 1px solid #0086cc;
+}
+.cartQte button,
+button.remove {
+  border: 1px solid #fff;
+  background: #0086cc;
+  color: #fff;
+  height: 30px;
+  text-align: center;
+  width: 30px;
+}
+.cartQte input {
+  height: 30px;
+  border: none;
+  padding: 0 10px;
+  width: 50px;
+  text-align: center;
+}
+button.remove {
+  background: #e52b2b;
+}
+
+#orderStep {
+}
+#orderButton {
+}
+#orderForm {
+  display: none;
+}
+
+.gform_fields,
+.gform_wrapper {
+  width: 100%;
+}
+
+.ginput_container input {
+  border-radius: 7px;
+  border: none;
+  background: #f5f7fa;
+  padding: 25px 20px !important;
+  font-weight: 500 !important;
+  display: block;
+  width: 100% !important;
+  height: calc(1.5em + 0.75rem + 2px);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-clip: padding-box;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.ginput_container_address > span {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.ginput_left.address_zip {
+  width: 250px !important;
+}
+
+.gform_button.button {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #fff;
+  background-color: #0086cc;
+  border: 1px solid #0086cc;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem !important;
+  line-height: 1.5;
+}
+
+.gform_wrapper li.gfield.gfield_error,
+.gform_wrapper
+  li.gfield.gfield_error.gfield_contains_required.gfield_creditcard_warning {
+  padding: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+.gform_wrapper
+  li.gfield.gfield_error.gfield_contains_required
+  div.gfield_description {
+  padding: 0 !important;
+}
+
+.gform_wrapper div.validation_error,
+.gform_wrapper .gfield_error .gfield_label,
+.gform_wrapper .validation_message,
+.gform_wrapper
+  li.gfield_error
+  input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]),
+.gform_wrapper li.gfield_error textarea {
+  color: #ea5959 !important;
+  border-color: #ea5959 !important;
+}
+
+@keyframes chatHeadBounceX {
+  0% {
+    transform: scale(1, 1) translateY(0);
+  }
+  10% {
+    transform: scale(1.1, 0.9) translateY(0);
+  }
+  30% {
+    transform: scale(0.9, 1.1) translateY(-10px);
+  }
+  50% {
+    transform: scale(1.05, 0.95) translateY(0);
+  }
+  57% {
+    transform: scale(1, 1) translateY(-5px);
+  }
+  64% {
+    transform: scale(1, 1) translateY(0);
+  }
+  100% {
+    transform: scale(1, 1) translateY(0);
+  }
+}
