@@ -3,7 +3,6 @@
 /**
  * Template Name: Accueil client
  */
-get_header();
 get_header("client"); ?>
 <?php 
         $version = "";
@@ -182,5 +181,4 @@ get_header("client"); ?>
             </div>
         </div>
 
-<?php get_footer(); ?>
 <?php get_footer('client'); ?>
