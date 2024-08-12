@@ -153,6 +153,7 @@ if (get_field('version_page') == "en") {
     });
 </script> 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <?php
     $source = get_bloginfo("template_url");
 
