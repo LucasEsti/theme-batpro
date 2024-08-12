@@ -1,0 +1,3 @@
+[submodule "realtime-batpro"]
+	path = realtime-batpro
+	url = https://github.com/LucasEsti/realtime-batpro
