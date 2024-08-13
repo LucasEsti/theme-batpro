@@ -524,7 +524,7 @@ if (get_field('version_page') == "en") {
 
             if (conn.readyState === conn.OPEN) {
                 //vue sur message
-                conn.send(JSON.stringify({ isReadClient: true }));
+                conn.send(JSON.stringify({ isReadClient: 1 }));
             }
 
         }
