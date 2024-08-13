@@ -219,7 +219,7 @@
                 var messageContainer = document.getElementById('messageContainer');
                 
                 createMessageSection(data.from, data.from);
-                createInput(data.from, false);
+                createInput(data.from, true);
                 var messageDisplay = document.getElementById('content-' + data.from);
                 var messageDiv = document.createElement('div');
                 
