@@ -107,8 +107,19 @@
                 clientDiv.appendChild(sendButton);
                 
                 if (firstLoad == true) {
-                    document.getElementById('client-' + from).classList.add('active');
-                    document.getElementById('messages-' + from).classList.add('active-chat');
+                    const personElements = document.querySelectorAll('.person');
+                    let hasActivePerson = false;
+
+                    personElements.forEach(person => {
+                        if (person.classList.contains('active')) {
+                            hasActivePerson = true;
+                        }
+                    });
+
+                    if (!hasActivePerson) {
+                        document.getElementById('client-' + from).classList.add('active');
+                        document.getElementById('messages-' + from).classList.add('active-chat');
+                    }
                 }
                 
             }
