@@ -419,8 +419,14 @@ if (get_field('version_page') == "en") {
                         responseInput.classList.add('hidden');
                         sendButton.classList.add('hidden');
                     }
+                    
+                }
+                if (self == "self") {
+                    newMessage.addClass("hidden");
+                } else {
                     newMessage.removeClass("hidden");
                 }
+                
             }
             
             var container = $('#chat');
@@ -462,7 +468,8 @@ if (get_field('version_page') == "en") {
                     }
                     
                 }
-                
+                conn.send(JSON.stringify({ isReadClient: 1 }));
+                newMessage.addClass("hidden");
             }
         }
         
@@ -483,6 +490,8 @@ if (get_field('version_page') == "en") {
                 reader.readAsDataURL(file);
                 $('#fileInputValue').val(''); // Clear the file input
             }
+            conn.send(JSON.stringify({ isReadClient: 1 }));
+            newMessage.addClass("hidden");
         }
         
         
@@ -490,6 +499,8 @@ if (get_field('version_page') == "en") {
         function sendChoice(choice) {
             if (currentQuestionId !== null) {
                 conn.send(JSON.stringify({ question_id: currentQuestionId, response: choice }));
+                conn.send(JSON.stringify({ isReadClient: 1 }));
+                newMessage.addClass("hidden");
             }
         }
 
