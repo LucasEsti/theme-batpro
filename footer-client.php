@@ -335,7 +335,7 @@ if (get_field('version_page') == "en") {
                         var button = document.createElement('button');
                         button.innerHTML = data.choices[choice];
                         button.setAttribute('type', 'button');
-                        button.classList.add('btn', 'btn-outline-primary', 'me-1', 'mb-1');
+                        button.classList.add('btn', 'btn-outline-primary', 'me-1', 'mb-1', 'mt-1');
                         button.onclick = (function(choice) {
                             return function() {
                                 sendChoice(choice);
