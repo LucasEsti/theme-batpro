@@ -147,7 +147,9 @@ get_header("client"); ?>
                     <span class="title">
                         ChatLive
                     </span>
-                    <button type="button" class="btn-close btn-close-white" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" aria-label="Close" style="background: none;border: none;">
+                        <i class="fa-regular fa-circle-xmark" style="color: white;"></i>
+                    </button>
                 </div>
                 <ul id="chat" class="messages">
                 </ul>
