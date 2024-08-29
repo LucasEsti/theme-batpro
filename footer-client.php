@@ -167,9 +167,9 @@ if (get_field('version_page') == "en") {
         
         let connex = "";
         if (clientId !== undefined) {
-            connex = 'wss://batpro-madagascar.com/wp-content/themes/theme-batpro/realtime-batpro/server?type=client&userId=' + clientId;
+            connex = 'ws://localhost:8080?type=client&userId=' + clientId;
         } else {
-            connex = 'wss://batpro-madagascar.com/wp-content/themes/theme-batpro/realtime-batpro/server?type=client';
+            connex = 'ws://localhost:8080?type=client';
         }
         var conn = new WebSocket(connex);
         
@@ -445,7 +445,7 @@ if (get_field('version_page') == "en") {
             var response = $('#responseInput').val();
             var file = document.getElementById('fileInputValue').files[0];
             if (currentQuestionId !== null) {
-                var dataResp = { question_id: currentQuestionId};
+                var dataResp = { type: 'client', question_id: currentQuestionId};
                 dataResp.response = "";
                 
                 if (file) {
@@ -468,8 +468,9 @@ if (get_field('version_page') == "en") {
                     }
                     
                 }
-                conn.send(JSON.stringify({ isReadClient: 1 }));
+                conn.send(JSON.stringify({type: 'client', isReadClient: 1 }));
                 newMessage.addClass("hidden");
+                
             }
         }
         
@@ -478,19 +479,19 @@ if (get_field('version_page') == "en") {
             var message2 = $('#simpleMessageInput').val();
             var file = document.getElementById('fileInputValue').files[0];
             if (message2) {
-                conn.send(JSON.stringify({ simple_message: message2 }));
+                conn.send(JSON.stringify({type: 'client', simple_message: message2 }));
                 $('#simpleMessageInput').val('');
             }
             if (file) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
                     var base64File = e.target.result.split(',')[1];
-                    conn.send(JSON.stringify({ file: { name: file.name, data: base64File } }));
+                    conn.send(JSON.stringify({type: 'client', file: { name: file.name, data: base64File } }));
                 };
                 reader.readAsDataURL(file);
                 $('#fileInputValue').val(''); // Clear the file input
             }
-            conn.send(JSON.stringify({ isReadClient: 1 }));
+            conn.send(JSON.stringify({type: 'client', isReadClient: 1 }));
             newMessage.addClass("hidden");
         }
         
@@ -498,8 +499,8 @@ if (get_field('version_page') == "en") {
         
         function sendChoice(choice) {
             if (currentQuestionId !== null) {
-                conn.send(JSON.stringify({ question_id: currentQuestionId, response: choice }));
-                conn.send(JSON.stringify({ isReadClient: 1 }));
+                conn.send(JSON.stringify({type: 'client', question_id: currentQuestionId, response: choice }));
+                conn.send(JSON.stringify({type: 'client', isReadClient: 1 }));
                 newMessage.addClass("hidden");
             }
         }
@@ -535,7 +536,7 @@ if (get_field('version_page') == "en") {
 
             if (conn.readyState === conn.OPEN) {
                 //vue sur message
-                conn.send(JSON.stringify({ isReadClient: 1 }));
+                conn.send(JSON.stringify({type: 'client', isReadClient: 1 }));
             }
 
         }

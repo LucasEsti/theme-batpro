@@ -9,8 +9,15 @@
     ?>
     <script>
        
-        
-        var ws = new WebSocket('wss://batpro-madagascar.com/wp-content/themes/theme-batpro/realtime-batpro/server?type=admin');
+        var adminId = $.cookie('adminId');
+        let connex = "";
+        if (adminId !== undefined) {
+            connex = 'ws://localhost:8080?type=admin&adminId=' + adminId;
+        } else {
+            console.log('eezadfzd');
+            connex = 'ws://localhost:8080?type=admin';
+        }
+        var ws = new WebSocket(connex);
         function isObject(value) {
             return value !== null && typeof value === 'object' && value.constructor === Object;
         }
@@ -76,7 +83,9 @@
         }
         
         function createInput(from, firstLoad = false) {
+            
             if (!document.getElementById('input-' + from)) {
+                console.log("createInput");
                 let clientDiv = document.getElementById('messages-' + from);
                 var messageInput = document.createElement('input');
                 messageInput.type = 'text';
@@ -120,6 +129,7 @@
                         document.getElementById('client-' + from).classList.add('active');
                         document.getElementById('messages-' + from).classList.add('active-chat');
                     }
+                    
                 }
                 
             }
@@ -130,6 +140,10 @@
         ws.onmessage = function(event) {
             var data = JSON.parse(event.data);
             console.log(data);
+            
+            if (data.type === 'id') {
+                $.cookie('adminId', data.id, { expires: 7, path: '/' });
+            } 
             
             if (data.type === 'listMessages') {
                 messages = data.message;
@@ -247,12 +261,12 @@
                 } else if (data.message) {
                     console.log("data.message");
                     console.log(data.message);
-                    let self = "me";
+                    if (isObject(data.message)) {
+                        console.log(data.message["type"]);
+                        let self = "me";
                         if (data.self) {
                             self = "you";
                         }
-                    if (isObject(data.message)) {
-                        console.log(data.message["type"]);
                         if (imageTypes.includes(data.message["type"])) {
                             messageDiv = document.createElement('div');
                             messageDiv.classList.add('bubble', self);
@@ -317,7 +331,7 @@
                 var reader = new FileReader();
                 reader.onload = function(e) {
                     var base64File = e.target.result.split(',')[1];
-                    ws.send(JSON.stringify({ file: { name: file.name, data: base64File }, clientId: clientId }));
+                    ws.send(JSON.stringify({ type: 'admin', clientId: clientId, file: { name: file.name, data: base64File } }));
                 };
                 reader.readAsDataURL(file);
                 fileInput.value = ''; // Clear the file input
@@ -325,55 +339,55 @@
         }
         
         let friends = {
-  list: document.querySelector('ul.people'),
-  all: document.querySelectorAll('.left .person'),
-  name: '' },
+            list: document.querySelector('ul.people'),
+            all: document.querySelectorAll('.left .person'),
+            name: '' },
 
-chat = {
-  container: document.querySelector('.container .right'),
-  current: null,
-  person: null,
-  name: document.querySelector('.container .right .top .name') };
+          chat = {
+            container: document.querySelector('.container .right'),
+            current: null,
+            person: null,
+            name: document.querySelector('.container .right .top .name') };
 
-function updateFriends() {
-    friends.all = document.querySelectorAll('.left .person');
-    friends.list = document.querySelector('ul.people');
-    friends.all.forEach(f => {
-        f.addEventListener('mousedown', () => {
-          f.classList.contains('active') || setAciveChat(f);
-        });
-      });
-}
+          function updateFriends() {
+              friends.all = document.querySelectorAll('.left .person');
+              friends.list = document.querySelector('ul.people');
+              friends.all.forEach(f => {
+                  f.addEventListener('mousedown', () => {
+                    f.classList.contains('active') || setAciveChat(f);
+                  });
+                });
+          }
 
-friends.all.forEach(f => {
-  f.addEventListener('mousedown', () => {
-    f.classList.contains('active') || setAciveChat(f);
-  });
-});
+          friends.all.forEach(f => {
+            f.addEventListener('mousedown', () => {
+              f.classList.contains('active') || setAciveChat(f);
+            });
+          });
 
-function setAciveChat(f) {
-    if (friends.list != null && friends.list.querySelector('.active') != null) {
-        friends.list.querySelector('.active').classList.remove('active');
-        f.classList.add('active');
-        f.classList.remove('non-lu');
-        chat.current = chat.container.querySelector('.active-chat');
+          function setAciveChat(f) {
+              if (friends.list != null && friends.list.querySelector('.active') != null) {
+                  friends.list.querySelector('.active').classList.remove('active');
+                  f.classList.add('active');
+                  f.classList.remove('non-lu');
+                  chat.current = chat.container.querySelector('.active-chat');
 
-        chat.person = f.getAttribute('data-chat');
-        ws.send(JSON.stringify({ type: 'admin', isReadAdmin: 1, clientId: chat.person }));
-        console.log(chat.person);
-        chat.current.classList.remove('active-chat');
-        chat.container.querySelector('[data-chat="' + chat.person + '"]').classList.add('active-chat');
-        friends.name = f.querySelector('.name').innerText;
-        chat.name.innerHTML = friends.name;
-        
-        var container = $('#messageContainer');
-        var target = $('#input-' + chat.person);
-        container.animate({
-            scrollTop: target.offset().top - container.offset().top + container.scrollTop()
-        }, 'slow');
-    }
-  
-}
+                  chat.person = f.getAttribute('data-chat');
+                  ws.send(JSON.stringify({ type: 'admin', isReadAdmin: 1, clientId: chat.person }));
+                  console.log(chat.person);
+                  chat.current.classList.remove('active-chat');
+                  chat.container.querySelector('[data-chat="' + chat.person + '"]').classList.add('active-chat');
+                  friends.name = f.querySelector('.name').innerText;
+                  chat.name.innerHTML = friends.name;
+
+                  var container = $('#messageContainer');
+                  var target = $('#input-' + chat.person);
+                  container.animate({
+                      scrollTop: target.offset().top - container.offset().top + container.scrollTop()
+                  }, 'slow');
+              }
+
+          }
     </script>
 </body>
 </html>
