@@ -145,7 +145,7 @@ get_header("client"); ?>
             <div class="chat container-fluid">
                 <div class="header">
                     <span class="title">
-                        ChatLive
+                        BatSupport
                     </span>
                     <button type="button" class="btn-close btn-close-white" aria-label="Close" style="background: none;border: none;">
                         <i class="fa-regular fa-circle-xmark" style="color: white;"></i>
