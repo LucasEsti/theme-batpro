@@ -88,6 +88,54 @@ if (get_field('version_page') == "en") {
             </div>
         </div>-->
     </div>
+    
+    <div class="floating-chat hidden">
+            <div class="new-message hidden">
+                <i class="fa-solid fa-1"></i>
+            </div>
+            
+            <i class="fa fa-comments" aria-hidden="true"></i>
+            <div class="chat container-fluid">
+                <div class="header">
+                    <span class="title" style="align-self: flex-end;">
+                        ChatLive
+                    </span>
+                    <button type="button" class="btn btn-link" aria-label="Close"><i class="fa-regular fa-window-minimize text-white"></i></button>
+                </div>
+                <ul id="chat" class="messages">
+                </ul>
+                <div class=" footer">
+                    <div class="container">
+                        <div class="row ">
+                            <div id="response" class="col-12 hidden">
+                                <input type="text" id="responseInput" placeholder="Entrez votre réponse" class="form-control text-box " />
+                            </div>
+                            
+                            <div id="simpleMessage" class="col-12 hidden">
+                                <input type="text" id="simpleMessageInput" placeholder="Entrez un message" class=" form-control text-box " />
+                            </div>
+                            
+                            
+                            <div id="fileInput" class="col-9 hidden mt-2 ">
+                                <input type="file" id="fileInputValue" class="form-control  " title=" "/>
+                            </div>
+                            
+                            
+                            <div id="sendButton" class="col-2 mt-2 hidden ">
+                                <button type="button" onclick="sendResponse()" class=" btn btn-primary ">Send</button>
+                            </div>
+                            <div id="sendSimpleMessageButton" class="col-2 mt-2 hidden">
+                                <button type="button" onclick="sendMessage()" class=" btn btn-primary ">Send</button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    
+                    
+                </div>
+            </div>
+        </div>
 
 <!--<script src="<?php bloginfo("template_url");  ?>/js/jquery-3.4.1.min.js"></script>-->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
