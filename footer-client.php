@@ -210,9 +210,7 @@ if (get_field('version_page') == "en") {
             } 
             
             if (data.type === 'listMessages') {
-                console.log("listMessages");
                 if (data.messageClient) {
-                    console.log(data);
                     var statusMessage = 0;
                     
                     data.messageClient.forEach(message => {
@@ -262,7 +260,6 @@ if (get_field('version_page') == "en") {
                     }
                 }
                 if (data.lastQuestionSave == null) {
-                    console.log("affiche");
                     simpleMessageInput.classList.remove('hidden');
                     sendSimpleMessageButton.classList.remove('hidden');
                     fileInput.classList.remove('hidden');
@@ -272,7 +269,6 @@ if (get_field('version_page') == "en") {
                     sendButton.classList.add('hidden');
                     
                 } else {
-                    console.log("affiche 2");
                     responseInput.classList.remove('hidden');
                     sendButton.classList.remove('hidden');
                     $(".choices").remove();
@@ -285,7 +281,6 @@ if (get_field('version_page') == "en") {
             }
             
             if (data.questionOld) {
-                console.log("questionOld");
                 if (Object.keys(data.choicesOld).length > 0) {
                     var li = document.createElement('li');
                     li.className = 'other';
@@ -315,19 +310,15 @@ if (get_field('version_page') == "en") {
             
             if (data.question) {
                 
-                console.log('question');
-                console.log(data);
                 currentQuestionId = data.question_id;  // Mise à jour de currentQuestionId
                 
                 var li = document.createElement('li');
                 li.className = "other";
-                console.log(data.question);
                 li.textContent = data.question;
                 chat.appendChild(li);
                 
                 $(".choices").remove();
                 if (Object.keys(data.choices).length > 0) {
-                    console.log('choice object');
                     var li = document.createElement('li');
                     li.classList.add('other', 'choices', 'class3');
                     
@@ -335,7 +326,7 @@ if (get_field('version_page') == "en") {
                         var button = document.createElement('button');
                         button.innerHTML = data.choices[choice];
                         button.setAttribute('type', 'button');
-                        button.classList.add('btn', 'btn-outline-primary', 'me-1', 'mb-1', 'mt-1');
+                        button.classList.add('btn', 'btn-outline-primary', 'ml-1', 'mr-1', 'mb-1', 'mt-1');
                         button.onclick = (function(choice) {
                             return function() {
                                 sendChoice(choice);
@@ -354,7 +345,6 @@ if (get_field('version_page') == "en") {
                     fileInput.classList.add('hidden');
 //                    sendFileButton.classList.add('hidden');
                 } else {
-                    console.log('not choices 1');
                     responseInput.classList.remove('hidden');
                     sendButton.classList.remove('hidden');
                     
@@ -370,9 +360,6 @@ if (get_field('version_page') == "en") {
 //                    sendFileButton.classList.add('hidden');
                 }
             } else if (data.message) {
-                console.log("message");
-                console.log(data.message);
-                
                 
                 if (isObject(data.message)) {
                     if (imageTypes.includes(data.message["type"])) {
@@ -441,7 +428,6 @@ if (get_field('version_page') == "en") {
 
         
         function sendResponse() {
-            console.log('sendResponse');
             var response = $('#responseInput').val();
             var file = document.getElementById('fileInputValue').files[0];
             if (currentQuestionId !== null) {
@@ -475,7 +461,6 @@ if (get_field('version_page') == "en") {
         }
         
         function sendMessage() {
-            console.log('sendMessage');
             var message2 = $('#simpleMessageInput').val();
             var file = document.getElementById('fileInputValue').files[0];
             if (message2) {

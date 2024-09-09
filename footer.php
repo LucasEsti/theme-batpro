@@ -122,10 +122,10 @@ if (get_field('version_page') == "en") {
                             
                             
                             <div id="sendButton" class="col-2 mt-2 hidden ">
-                                <button type="button" onclick="sendResponse()" class=" btn btn-primary ">Send</button>
+                                <button type="button" onclick="sendResponse()" class=" btn btn-primary "><i class="fa-regular fa-paper-plane"></i></button>
                             </div>
                             <div id="sendSimpleMessageButton" class="col-2 mt-2 hidden">
-                                <button type="button" onclick="sendMessage()" class=" btn btn-primary ">Send</button>
+                                <button type="button" onclick="sendMessage()" class=" btn btn-primary "><i class="fa-regular fa-paper-plane"></i></button>
                             </div>
                             
                         </div>
