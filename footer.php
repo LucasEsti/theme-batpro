@@ -250,6 +250,8 @@ if (get_field('version_page') == "en") {
         conn.onopen = function() {
             console.log('WebSocket connection opened');
             $(".floating-chat").removeClass("hidden");
+            const elementBounce = document.querySelector('.fa-comments');
+            elementBounce.classList.add('animate__animated', 'animate__tada', "animate__delay-3s", "animate__infinite");
         };
         
         conn.onmessage = function(e) {
