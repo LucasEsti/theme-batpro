@@ -88,7 +88,7 @@ if (get_field('version_page') == "en") {
             </div>
         </div>-->
     </div>
-    
+
     <div class="floating-chat hidden">
             <div class="new-message hidden">
                 <i class="fa-solid fa-1"></i>
@@ -156,7 +156,7 @@ if (get_field('version_page') == "en") {
 <script src="<?php bloginfo("template_url");  ?>/js/count.js"></script>
 
 
-<!--<script src="<?php bloginfo("template_url");  ?>/js/aos.js"></script>-->
+<!--<script src="<?php // bloginfo("template_url");  ?>/js/aos.js"></script>-->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <?php wp_footer(); ?>
@@ -200,6 +200,7 @@ if (get_field('version_page') == "en") {
         });
     });
 </script> 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <?php
     $source = get_bloginfo("template_url");
@@ -646,5 +647,7 @@ if (get_field('version_page') == "en") {
             }
         }
     </script>
+    
 </body>
 </html>
+    
