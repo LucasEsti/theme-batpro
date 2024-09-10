@@ -1,14 +1,64 @@
+<audio id="notification-sound" class="hidden" src="https://batpro-madagascar.com/wp-content/uploads/2024/09/livechat-129007.mp3" preload="auto"></audio>
+    
+    <div id="permissionModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Nous avons besoin de votre permission pour lire l'audio. Voulez-vous continuer ?</p>
+            <button id="confirmButton">Oui</button>
+            <!--<button id="cancelButton">Non</button>-->
+        </div>
+    </div>
 
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var modal = document.getElementById('permissionModal');
+            var close = document.getElementsByClassName('close')[0];
+            var confirmButton = document.getElementById('confirmButton');
+//            var cancelButton = document.getElementById('cancelButton');
+
+            modal.style.display = 'block';
+            // Fermer le modal lorsque l'utilisateur clique sur "X"
+            close.onclick = function() {
+                modal.style.display = 'none';
+            }
+
+            // Fermer le modal et lire l'audio lorsque l'utilisateur clique sur "Oui"
+            confirmButton.onclick = function() {
+                modal.style.display = 'none';
+                var audio = new Audio('path/to/your/audiofile.mp3');
+                audio.play().catch(function(error) {
+//                    alert('Voulez-vous activer les notifications sonores?');
+                });
+            }
+
+            // Fermer le modal lorsque l'utilisateur clique sur "Non"
+//            cancelButton.onclick = function() {
+//                modal.style.display = 'none';
+//            }
+
+            // Fermer le modal lorsque l'utilisateur clique en dehors du modal
+            window.onclick = function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            }
+        });
+
+    </script>
     <?php
     $source = get_bloginfo("template_url");
 
     $uploadsUrl = $source . "/realtime-batpro/uploads/";
     ?>
     <script>
-       
+       function playNotificationSound() {
+            const audio = new Audio('https://batpro-madagascar.com/wp-content/uploads/2024/09/livechat-129007.mp3'); 
+            audio.play(); // Joue le son
+        }
         var adminId = $.cookie('adminId');
         let connex = "";
         if (adminId !== undefined) {

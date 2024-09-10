@@ -98,7 +98,7 @@ if (get_field('version_page') == "en") {
             <div class="chat container-fluid">
                 <div class="header">
                     <span class="title" style="align-self: flex-end;">
-                        ChatLive
+                        BatSupport
                     </span>
                     <button type="button" class="btn btn-link" aria-label="Close"><i class="fa-regular fa-window-minimize text-white"></i></button>
                 </div>
@@ -212,7 +212,10 @@ if (get_field('version_page') == "en") {
     ?>
     
     <script>
-        
+        function playNotificationSound() {
+            const audio = new Audio('https://batpro-madagascar.com/wp-content/uploads/2024/09/livechat-129007.mp3'); 
+            audio.play(); // Joue le son
+        }
         var clientId = $.cookie('clientId');
         var newMessage = $(".new-message");
         
