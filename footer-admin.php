@@ -114,7 +114,7 @@
                 people.appendChild(liPersonne);
                 updateFriends();
                     <!--list client-->
-                
+                playNotificationSound(); 
                 
                   clientDiv = document.createElement('div');
                   clientDiv.id = 'messages-' + from;
@@ -351,7 +351,7 @@
                     
 
                 } 
-                
+                playNotificationSound();
                 //                    mettre en top dernier message non lu 
                 $("#client-" + data.from).prependTo('#listPeople');
                 $("#client-" + data.from).addClass('non-lu');
