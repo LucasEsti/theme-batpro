@@ -67,10 +67,10 @@
         var adminId = $.cookie('adminId');
         let connex = "";
         if (adminId !== undefined) {
-            connex = 'ws://localhost:8080?type=admin&adminId=' + adminId;
+            connex = 'wss://batpro-madagascar.com/wp-content/themes/theme-batpro/realtime-batpro/server?type=admin&adminId=' + adminId;
         } else {
             console.log('eezadfzd');
-            connex = 'ws://localhost:8080?type=admin';
+            connex = 'wss://batpro-madagascar.com/wp-content/themes/theme-batpro/realtime-batpro/server?type=admin';
         }
         var ws = new WebSocket(connex);
         function isObject(value) {
