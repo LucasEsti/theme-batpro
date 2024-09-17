@@ -27,6 +27,9 @@ $uploadsUrl = $source . "/realtime-batpro/uploads/";
             height: 75%;
             position: relative;
         }
+        .dateEnvoie {
+           font-size: 11px;
+        }
         /* Styles pour le modal */
 .modal {
     display: none; /* Masquer le modal par défaut */
