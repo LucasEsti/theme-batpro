@@ -89,6 +89,57 @@ if (get_field('version_page') == "en") {
         </div>-->
     </div>
 
+    <div class="floating-chat hidden">
+            <div class="new-message hidden">
+                <i class="fa-solid fa-1"></i>
+            </div>
+            
+            <i class="fa fa-comments" aria-hidden="true"></i>
+            <div class="chat container-fluid">
+                <div class="header">
+                    <span class="title" style="align-self: flex-end;">
+                        BatSupport
+                    </span>
+                    <button type="button" class="btn btn-link" aria-label="Close"><i class="fa-regular fa-window-minimize text-white"></i></button>
+                </div>
+                <ul id="chat" class="messages">
+                </ul>
+                <div class=" footer">
+                    <div class="container">
+                        <div class="row ">
+                            <div id="response" class="col-8 hidden">
+                                <input type="text" id="responseInput" placeholder="Entrez votre réponse" class="form-control text-box " />
+                            </div>
+                            
+                            <div id="simpleMessage" class="col-8 hidden">
+                                <input type="text" id="simpleMessageInput" placeholder="Entrez un message" class=" form-control text-box " />
+                            </div>
+                            
+                            
+                            <div id="fileInput" class="col-2 hidden ">
+                                <label for="fileInputValue" class="custom-file-upload">
+                                        <i class="fa-regular fa-file"></i>
+                                </label>
+                                <input type="file" id="fileInputValue" class="form-control" title=" "/>
+                            </div>
+                            
+                            
+                            <div id="sendButton" class="col-2 hidden ">
+                                <button type="button" onclick="sendResponse()" class=" btn btn-primary "><i class="fa-regular fa-paper-plane"></i></button>
+                            </div>
+                            <div id="sendSimpleMessageButton" class="col-2 hidden">
+                                <button type="button" onclick="sendMessage()" class=" btn btn-primary "><i class="fa-regular fa-paper-plane"></i></button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    
+                    
+                </div>
+            </div>
+        </div>
+
 <!--<script src="<?php bloginfo("template_url");  ?>/js/jquery-3.4.1.min.js"></script>-->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
@@ -108,7 +159,7 @@ if (get_field('version_page') == "en") {
 <script src="<?php bloginfo("template_url");  ?>/js/count.js"></script>
 
 
-<!--<script src="<?php bloginfo("template_url");  ?>/js/aos.js"></script>-->
+<!--<script src="<?php // bloginfo("template_url");  ?>/js/aos.js"></script>-->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <?php wp_footer(); ?>
@@ -154,14 +205,34 @@ if (get_field('version_page') == "en") {
 </script> 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+<?php
+// Déterminez le schéma (http/https) et le nom d'hôte
+$scheme = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+$host = $_SERVER['HTTP_HOST'];
+
+// Déterminez le chemin de base de votre application
+$scriptName = dirname($_SERVER['SCRIPT_NAME']);
+
+// Définir l'URL de base
+$uploadsUrl = $scheme . '://' . $host . $scriptName . '/uploads/';
+echo $uploadsUrl;
+$source = $scheme . '://' . $host . $scriptName . '/';
+
+?>
+
 <?php
     $source = get_bloginfo("template_url");
 
     $uploadsUrl = $source . "/realtime-batpro/uploads/";
+    echo $uploadsUrl;
     ?>
     
     <script>
-        
+        function playNotificationSound() {
+            const audio = new Audio('https://batpro-madagascar.com/wp-content/uploads/2024/09/livechat-129007.mp3'); 
+            audio.play(); // Joue le son
+        }
         var clientId = $.cookie('clientId');
         var newMessage = $(".new-message");
         
@@ -199,18 +270,28 @@ if (get_field('version_page') == "en") {
         conn.onopen = function() {
             console.log('WebSocket connection opened');
             $(".floating-chat").removeClass("hidden");
+            const elementBounce = document.querySelector('.fa-comments');
+            elementBounce.classList.add('animate__animated', 'animate__tada', "animate__delay-3s", "animate__infinite");
+            setInterval(function() {
+                console.log('Envoi du ping au serveur');
+                conn.send(JSON.stringify({ type: 'ping' }));
+            }, 3600000);
         };
         
         conn.onmessage = function(e) {
             var data = JSON.parse(e.data);
-            
+            if (data.type === 'pong') {
+                console.log('Pong reçu du serveur');
+            }
 //            var chatBox = document.getElementById('chatBox');
             if (data.type === 'id') {
                 $.cookie('clientId', data.id, { expires: 7, path: '/' });
             } 
             
             if (data.type === 'listMessages') {
+                console.log("listMessages");
                 if (data.messageClient) {
+                    console.log(data);
                     var statusMessage = 0;
                     
                     data.messageClient.forEach(message => {
@@ -260,6 +341,7 @@ if (get_field('version_page') == "en") {
                     }
                 }
                 if (data.lastQuestionSave == null) {
+                    console.log("affiche");
                     simpleMessageInput.classList.remove('hidden');
                     sendSimpleMessageButton.classList.remove('hidden');
                     fileInput.classList.remove('hidden');
@@ -269,6 +351,7 @@ if (get_field('version_page') == "en") {
                     sendButton.classList.add('hidden');
                     
                 } else {
+                    console.log("affiche 2");
                     responseInput.classList.remove('hidden');
                     sendButton.classList.remove('hidden');
                     $(".choices").remove();
@@ -281,6 +364,7 @@ if (get_field('version_page') == "en") {
             }
             
             if (data.questionOld) {
+                console.log("questionOld");
                 if (Object.keys(data.choicesOld).length > 0) {
                     var li = document.createElement('li');
                     li.className = 'other';
@@ -310,15 +394,19 @@ if (get_field('version_page') == "en") {
             
             if (data.question) {
                 
+                console.log('question');
+                console.log(data);
                 currentQuestionId = data.question_id;  // Mise à jour de currentQuestionId
                 
                 var li = document.createElement('li');
                 li.className = "other";
+                console.log(data.question);
                 li.textContent = data.question;
                 chat.appendChild(li);
                 
                 $(".choices").remove();
                 if (Object.keys(data.choices).length > 0) {
+                    console.log('choice object');
                     var li = document.createElement('li');
                     li.classList.add('other', 'choices', 'class3');
                     
@@ -326,7 +414,7 @@ if (get_field('version_page') == "en") {
                         var button = document.createElement('button');
                         button.innerHTML = data.choices[choice];
                         button.setAttribute('type', 'button');
-                        button.classList.add('btn', 'btn-outline-primary', 'ml-1', 'mr-1', 'mb-1', 'mt-1');
+                        button.classList.add('btn', 'btn-outline-primary', 'me-1', 'mb-1', 'mt-1');
                         button.onclick = (function(choice) {
                             return function() {
                                 sendChoice(choice);
@@ -345,6 +433,7 @@ if (get_field('version_page') == "en") {
                     fileInput.classList.add('hidden');
 //                    sendFileButton.classList.add('hidden');
                 } else {
+                    console.log('not choices 1');
                     responseInput.classList.remove('hidden');
                     sendButton.classList.remove('hidden');
                     
@@ -360,6 +449,9 @@ if (get_field('version_page') == "en") {
 //                    sendFileButton.classList.add('hidden');
                 }
             } else if (data.message) {
+                console.log("message");
+                console.log(data.message);
+                
                 
                 if (isObject(data.message)) {
                     if (imageTypes.includes(data.message["type"])) {
@@ -428,6 +520,7 @@ if (get_field('version_page') == "en") {
 
         
         function sendResponse() {
+            console.log('sendResponse');
             var response = $('#responseInput').val();
             var file = document.getElementById('fileInputValue').files[0];
             if (currentQuestionId !== null) {
@@ -461,6 +554,7 @@ if (get_field('version_page') == "en") {
         }
         
         function sendMessage() {
+            console.log('sendMessage');
             var message2 = $('#simpleMessageInput').val();
             var file = document.getElementById('fileInputValue').files[0];
             if (message2) {
