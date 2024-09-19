@@ -28,7 +28,7 @@
 
             // Fermer le modal et lire l'audio lorsque l'utilisateur clique sur "Oui"
             confirmButton.onclick = function() {
-//                modal.style.display = 'none';
+                modal.style.display = 'none';
 ////                var audio = new Audio('path/to/your/audiofile.mp3');
 ////                audio.play().catch(function(error) {
 ////                    alert('Voulez-vous activer les notifications sonores?');
