@@ -212,7 +212,6 @@ if (get_field('version_page') == "en") {
     ?>
     
     <script>
-        $(document).ready(function() {
             function playNotificationSound() {
                 const audio = new Audio('https://batpro-madagascar.com/wp-content/uploads/2024/09/livechat-129007.mp3'); 
                 audio.play(); // Joue le son
@@ -662,7 +661,7 @@ if (get_field('version_page') == "en") {
                 }
             }
         
-        });
+        
     </script>
     
 </body>

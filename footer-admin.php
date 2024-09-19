@@ -56,7 +56,6 @@
     ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script>
-        $(document).ready(function() {
             function playNotificationSound() {
                  var sound = document.getElementById('notification-sound');
                  sound.play();
@@ -504,7 +503,6 @@
                    }
 
                }
-          });
     </script>
 </body>
 </html>
