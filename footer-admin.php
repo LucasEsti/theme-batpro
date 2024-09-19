@@ -84,7 +84,7 @@
             setInterval(function() {
                 console.log('Envoi du ping au serveur');
                 ws.send(JSON.stringify({ type: 'ping' }));
-            }, 3600000);
+            }, 600000);
         };
         
         ws.onclose = function() {

@@ -258,7 +258,7 @@ if (get_field('version_page') == "en") {
             setInterval(function() {
                 console.log('Envoi du ping au serveur');
                 conn.send(JSON.stringify({ type: 'ping' }));
-            }, 3600000);
+            }, 600000);
         };
         
         conn.onmessage = function(e) {
