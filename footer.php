@@ -235,6 +235,7 @@ if (get_field('version_page') == "en") {
 
             conn.onclose = function() {
                     console.log('WebSocket is closed now.');
+                    
                 };
             conn.onerror = function(error) {
                 console.log('WebSocket error: ' + error.message);
