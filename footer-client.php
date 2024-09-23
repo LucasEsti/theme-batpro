@@ -227,20 +227,25 @@ $source = $scheme . '://' . $host . $scriptName . '/';
     $uploadsUrl = $source . "/realtime-batpro/uploads/";
     echo $uploadsUrl;
     ?>
-    
     <script>
+        
         function playNotificationSound() {
-            const audio = new Audio('https://batpro-madagascar.com/wp-content/uploads/2024/09/livechat-129007.mp3'); 
-            audio.play(); // Joue le son
+//            audio.play(); // Joue le son
         }
+
+        // Appelez la fonction lorsque la notification est déclenchée
+        const audio = new Audio('https://batpro-madagascar.com/wp-content/uploads/2024/09/livechat-129007.mp3'); 
+        audio.load();
         var clientId = $.cookie('clientId');
         var newMessage = $(".new-message");
         
-        let connex = "";
+        let connex;
+        let reconnection = 0;
+        let linkServer = 'wss://batpro-madagascar.com/wp-content/themes/theme-batpro/realtime-batpro/server';
         if (clientId !== undefined) {
-            connex = 'wss://batpro-madagascar.com/wp-content/themes/theme-batpro/realtime-batpro/server?type=client&userId=' + clientId;
+            connex = linkServer + '?type=client&userId=' + clientId;
         } else {
-            connex = 'wss://batpro-madagascar.com/wp-content/themes/theme-batpro/realtime-batpro/server?type=client';
+            connex = linkServer + '?type=client';
         }
         var conn = new WebSocket(connex);
         
@@ -250,12 +255,6 @@ $source = $scheme . '://' . $host . $scriptName . '/';
             return value !== null && typeof value === 'object' && value.constructor === Object;
         }
         
-        conn.onclose = function() {
-                console.log('WebSocket is closed now.');
-            };
-        conn.onerror = function(error) {
-            console.log('WebSocket error: ' + error.message);
-        };
         
         var chat = document.getElementById('chat');
         var responseInput = document.getElementById('response');
@@ -267,18 +266,9 @@ $source = $scheme . '://' . $host . $scriptName . '/';
         var currentQuestionId = null;
         const imageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
         
-        conn.onopen = function() {
-            console.log('WebSocket connection opened');
-            $(".floating-chat").removeClass("hidden");
-            const elementBounce = document.querySelector('.fa-comments');
-            elementBounce.classList.add('animate__animated', 'animate__tada', "animate__delay-3s", "animate__infinite");
-            setInterval(function() {
-                console.log('Envoi du ping au serveur');
-                conn.send(JSON.stringify({ type: 'ping' }));
-            }, 120000);
-        };
         
-        conn.onmessage = function(e) {
+        
+         function onMessageWebscocket(e) {
             var data = JSON.parse(e.data);
             if (data.type === 'pong') {
                 console.log('Pong reçu du serveur');
@@ -287,8 +277,8 @@ $source = $scheme . '://' . $host . $scriptName . '/';
             if (data.type === 'id') {
                 $.cookie('clientId', data.id, { expires: 7, path: '/' });
             } 
-            
-            if (data.type === 'listMessages') {
+            console.log('not pong');
+            if (data.type === 'listMessages' && reconnection == 0) {
                 console.log("listMessages");
                 if (data.messageClient) {
                     console.log(data);
@@ -385,6 +375,7 @@ $source = $scheme . '://' . $host . $scriptName . '/';
                 li.className = 'self';
                 li.textContent = data.reponseQuestion;
                 chat.appendChild(li);
+                
             }
             
             let self = "other";
@@ -414,7 +405,7 @@ $source = $scheme . '://' . $host . $scriptName . '/';
                         var button = document.createElement('button');
                         button.innerHTML = data.choices[choice];
                         button.setAttribute('type', 'button');
-                        button.classList.add('btn', 'btn-outline-primary', 'me-1', 'mb-1', 'mt-1');
+                        button.classList.add('btn', 'btn-outline-primary', 'ml-1', 'mr-1', 'mb-1', 'mt-1');
                         button.onclick = (function(choice) {
                             return function() {
                                 sendChoice(choice);
@@ -448,6 +439,7 @@ $source = $scheme . '://' . $host . $scriptName . '/';
                     
 //                    sendFileButton.classList.add('hidden');
                 }
+                playNotificationSound();
             } else if (data.message) {
                 console.log("message");
                 console.log(data.message);
@@ -505,6 +497,7 @@ $source = $scheme . '://' . $host . $scriptName . '/';
                 } else {
                     newMessage.removeClass("hidden");
                 }
+                playNotificationSound();
                 
             }
             
@@ -514,9 +507,63 @@ $source = $scheme . '://' . $host . $scriptName . '/';
             container.animate({
                 scrollTop: target.offset().top - container.offset().top + container.scrollTop()
             }, 'slow');
-            
-            
+        }
+
+        
+        function reconnectionOnClose() {
+            if (conn && (conn.readyState === WebSocket.OPEN || conn.readyState === WebSocket.CONNECTING)) {
+                console.log("Déjà connecté ou en cours de connexion, reconnexion non nécessaire.");
+                return;
+            }
+            if (clientId !== undefined) {
+                conn = linkServer + '?type=client&userId=' + clientId;
+
+            } else {
+                conn = linkServer + '?type=client';
+            }
+            conn = new WebSocket(connex);
+            reconnection = 1;
+            conn.onmessage = function(e) {
+                onMessageWebscocket(e);
+            };
+
+            conn.onerror = function(error) {
+                console.log('WebSocket error: ' + error.message);
+            };
+
+            conn.onclose = function() {
+                reconnectionOnClose();
+            };
+        }
+        
+        conn.onopen = function() {
+            console.log('WebSocket connection opened');
+            $(".floating-chat").removeClass("hidden");
+            const elementBounce = document.querySelector('.fa-comments');
+            elementBounce.classList.add('animate__animated', 'animate__tada', "animate__delay-3s", "animate__infinite");
+            setInterval(function() {
+                console.log('Envoi du ping au serveur');
+                conn.send(JSON.stringify({ type: 'ping' }));
+            }, 120000);
         };
+        
+        conn.onclose = function() {
+            console.log('WebSocket is closed now.');
+            reconnectionOnClose();
+        };
+        conn.onerror = function(error) {
+            console.log('WebSocket error: ' + error.message);
+        };
+        
+        conn.onmessage = function(e) {
+            onMessageWebscocket(e);
+        };
+        
+       
+        setInterval(function() {
+            reconnectionOnClose(); // Réessaie de te reconnecter
+        }, 5000);
+        
 
         
         function sendResponse() {
@@ -677,6 +724,7 @@ $source = $scheme . '://' . $host . $scriptName . '/';
                 sendNewMessage();
             }
         }
+        
     </script>
     
 </body>
