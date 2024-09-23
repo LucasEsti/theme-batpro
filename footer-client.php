@@ -205,27 +205,10 @@ if (get_field('version_page') == "en") {
 </script> 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-
-<?php
-// Déterminez le schéma (http/https) et le nom d'hôte
-$scheme = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
-$host = $_SERVER['HTTP_HOST'];
-
-// Déterminez le chemin de base de votre application
-$scriptName = dirname($_SERVER['SCRIPT_NAME']);
-
-// Définir l'URL de base
-$uploadsUrl = $scheme . '://' . $host . $scriptName . '/uploads/';
-echo $uploadsUrl;
-$source = $scheme . '://' . $host . $scriptName . '/';
-
-?>
-
 <?php
     $source = get_bloginfo("template_url");
 
     $uploadsUrl = $source . "/realtime-batpro/uploads/";
-    echo $uploadsUrl;
     ?>
     <script>
         
