@@ -253,6 +253,7 @@ if (get_field('version_page') == "en") {
         
         
          function onMessageWebscocket(e) {
+             console.log('onMessageWebscocket');
             var data = JSON.parse(e.data);
             if (data.type === 'pong') {
                 console.log('Pong reçu du serveur');
@@ -261,8 +262,8 @@ if (get_field('version_page') == "en") {
             if (data.type === 'id') {
                 $.cookie('clientId', data.id, { expires: 7, path: '/' });
             } 
-            console.log('not pong');
-            if (data.type === 'listMessages' && reconnection == 0) {
+            
+            if (data.type === 'listMessages' && reconnection === 0) {
                 console.log("listMessages");
                 if (data.messageClient) {
                     console.log(data);
