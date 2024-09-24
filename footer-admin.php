@@ -463,6 +463,11 @@
             let now = moment().format('YYYY-MM-DD HH:mm:ss');
             if (message && clientId) {
                 ws.send(JSON.stringify({ type: 'admin', message: message, "date": now, clientId: clientId }));
+                
+                ws.send(JSON.stringify({ type: 'admin', isReadAdmin: 1, clientId: clientId }));
+                
+                var messageClient = document.getElementById('client-' + clientId);
+                messageClient.classList.remove('non-lu');
 
                 var messageDisplay = document.getElementById('content-' + clientId);
                 var adminMessageDiv = document.createElement('div');
@@ -487,6 +492,9 @@
                 reader.onload = function(e) {
                     var base64File = e.target.result.split(',')[1];
                     ws.send(JSON.stringify({ type: 'admin', "date": now, clientId: clientId, file: { name: file.name, data: base64File } }));
+                    ws.send(JSON.stringify({ type: 'admin', isReadAdmin: 1, clientId: clientId }));
+                    var messageClient = document.getElementById('client-' + clientId);
+                    messageClient.classList.remove('non-lu');
                 };
                 reader.readAsDataURL(file);
                 fileInput.value = ''; // Clear the file input
@@ -524,11 +532,11 @@
               if (friends.list != null && friends.list.querySelector('.active') != null) {
                   friends.list.querySelector('.active').classList.remove('active');
                   f.classList.add('active');
-                  f.classList.remove('non-lu');
+//                  f.classList.remove('non-lu');
                   chat.current = chat.container.querySelector('.active-chat');
 
                   chat.person = f.getAttribute('data-chat');
-                  ws.send(JSON.stringify({ type: 'admin', isReadAdmin: 1, clientId: chat.person }));
+//                  ws.send(JSON.stringify({ type: 'admin', isReadAdmin: 1, clientId: chat.person }));
                   console.log(chat.person);
                   chat.current.classList.remove('active-chat');
                   chat.container.querySelector('[data-chat="' + chat.person + '"]').classList.add('active-chat');
