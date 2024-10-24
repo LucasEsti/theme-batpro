@@ -111,7 +111,7 @@ get_header();
 											$text = trim(strip_tags($text));
                                                                                         $text = str_replace("\xC2\xA0", ' ', $text);
 											?>
-											<?php echo wp_trim_words( $text, 15, '...' ); ?>
+											<?php echo wp_trim_words( $text, 23, '...' ); ?>
 										</div>
 <!--                                                                                search by decl reference-->
                                                                                 

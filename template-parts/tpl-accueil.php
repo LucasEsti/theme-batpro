@@ -92,8 +92,40 @@ get_header(); ?>
                                                 </div>
                                                 <div class="ref"><?php if( get_field('marques') ): ?><strong>marque:</strong> <?php the_field('marques'); ?> - <?php endif; ?>  <?php if( get_field('references') ): ?><strong>ref:</strong> <?php the_field('references'); ?><?php endif; ?></div>
                                                 <div class="content-product">
+                                                    <?php
+                                                        $declinaison = get_field('declinaison');
+                                                        $linkdecl = "";
+                                                        $decl_default = "";
+                                                        $description = "";
+                                                        $iter = 0;
+                                                        if(!empty($declinaison)): 
+                                                            foreach( $declinaison['value_repetiteur'] as $valueRepetiteur ):
+                                                                if($valueRepetiteur["reference"] == $_GET["s"]): 
+                                                                    $linkdecl = "?decl=" . $_GET["s"];
+                                                                    $decl_default = $_GET["s"];
+                                                                    $description = $valueRepetiteur["description"];
+                                                                    if ($iter == "" || $iter == null) {
+                                                                        $iter = 0;
+                                                                    } else {
+                                                                        $iter = $valueRepetiteur["numero"];
+                                                                    }
+
+                                                                endif;
+                                                            endforeach;
+                                                    ?>
+                                                    <?php endif;?>
+                                                    
+                                                    
+                                                    <?php 
+                                                        $text = get_field("extrait_description");
+                                                        if (get_field("extrait_description") == "") {
+                                                            $text = $description;
+                                                        }
+                                                        $text = trim(strip_tags($text));
+                                                        $text = str_replace("\xC2\xA0", ' ', $text);
+                                                        ?>
                                                     <div class="product__short-description">
-                                                        <?php echo wp_trim_words( get_field("extrait_description"), 23, '...' ); ?>
+                                                        <?php echo wp_trim_words( $text, 23, '...' ); ?>
                                                     </div>
                                                     
                                                     <!-- en savoir plus ---------------------------------------------- -->
@@ -101,7 +133,6 @@ get_header(); ?>
                                                     
                                                     <!-- en lien---------------------------------------------- -->
                                                     <?php
-                                                        $declinaison = get_field('declinaison');
                                                         if(empty($declinaison) || $declinaison["value_repetiteur"] == false): 
                                                     ?>
                                                         <?php echo do_shortcode('[bpcart_button product="'.get_the_ID().'"]')?>
