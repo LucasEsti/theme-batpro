@@ -60,12 +60,14 @@ get_header();
                                                                     $declinaison = get_field('declinaison');
                                                                     $linkdecl = "";
                                                                     $decl_default = "";
+                                                                    $description = "";
                                                                     $iter = 0;
                                                                     if(!empty($declinaison)): 
                                                                         foreach( $declinaison['value_repetiteur'] as $valueRepetiteur ):
                                                                             if($valueRepetiteur["reference"] == $_GET["s"]): 
                                                                                 $linkdecl = "?decl=" . $_GET["s"];
                                                                                 $decl_default = $_GET["s"];
+                                                                                $description = $valueRepetiteur["description"];
                                                                                 if ($iter == "" || $iter == null) {
                                                                                     $iter = 0;
                                                                                 } else {
@@ -101,8 +103,15 @@ get_header();
                                                                         </div>
 									<div class="content-product">
 										<div class="product__short-description">
-											<?php //the_field("extrait_description"); ?>
-											<?php echo wp_trim_words( get_field("extrait_description"), 23, '...' ); ?>
+											<?php //the_field("extrait_description"); 
+											$text = get_field("extrait_description");
+											if (get_field("extrait_description") == "") {
+											    $text = $description;
+											}
+											$text = trim(strip_tags($text));
+                                                                                        $text = str_replace("\xC2\xA0", ' ', $text);
+											?>
+											<?php echo wp_trim_words( $text, 15, '...' ); ?>
 										</div>
 <!--                                                                                search by decl reference-->
                                                                                 
