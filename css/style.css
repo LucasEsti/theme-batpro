@@ -3121,3 +3121,18 @@ span.wpcf7-list-item{
   width: 49.2%;
   margin-bottom: 20px;
 }
+
+#pub .listing-pub .caption .promo {
+line-height: 45px;
+font-size: 25px;
+  color: #e51f49;
+  font-weight: 600;
+}
+
+#pub .listing-pub .caption .promo.barre {
+text-decoration: line-through;
+font-size: 18px;
+  color: #848484;
+  font-weight: 400;
+  line-height: 45px;
+}

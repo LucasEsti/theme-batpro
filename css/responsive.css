@@ -730,6 +730,14 @@
 }
 
 @media (max-width: 768px){
+    .page-template-tpl-promo-page #pub .listing-pub li{
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      
+      #pub .listing-pub li img {
+          height: 53%;
+      }
     #nouveaux .grid .product {
         width: 47%;
     }
