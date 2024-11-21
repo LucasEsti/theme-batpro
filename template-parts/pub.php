@@ -19,7 +19,12 @@
                                 <img src="<?php the_sub_field('fond'); ?>" class="img-fluid" alt="image batpro">
                                 <div class="caption">
                                     <div class="titre">
-                                        <!-- <span class="promo">-35%</span> -->
+                                        <?php if (get_sub_field('prix')) :?>
+                                         <span class="promo"><?php echo number_format(get_sub_field('prix'), 0, '', '.'); ?> Ar</span>
+                                         <?php endif; ?>
+                                         <?php if (get_sub_field('prix_barre')) :?>
+                                         <span class="promo barre"><?php echo number_format(get_sub_field('prix_barre'), 0, '', '.'); ?> Ar</span> 
+                                         <?php endif; ?>
                                         <div>
                                             <strong><?php the_sub_field('titre'); ?></strong>
                                         </div>
