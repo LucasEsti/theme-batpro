@@ -730,6 +730,13 @@
 }
 
 @media (max-width: 768px){
+    #pub .listing-pub .caption .promo {
+        font-size: 19px;
+}
+
+#pub .listing-pub .caption .promo.barre {
+font-size: 13px;
+}
     #nouveaux .grid .product {
         width: 47%;
     }
