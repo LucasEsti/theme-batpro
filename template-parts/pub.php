@@ -1,5 +1,12 @@
 <!--Publicité -->
-<?php $version = $args['version']; ?>
+<?php $version = $args['version']; 
+$boutonText = 'En savoir plus';
+
+if ($version == "_en") {
+    $boutonText = "More";
+}
+
+?>
 <section id="pub">
     <div class="container">
         <div class="row">
@@ -31,7 +38,7 @@
                                     </div>
 
                                     <!-- en ---------------------------------------------- -->
-                                    <a href="<?php the_sub_field('lien'); ?>" class="btn-custom2"><?php the_sub_field('bouton' . $version); ?></a>
+                                    <a href="<?php the_sub_field('lien'); ?>" class="btn-custom2"><?php echo $boutonText; ?></a>
                                 </div>
                             </li>
                         <?php endwhile; ?>

@@ -27,7 +27,9 @@ get_header(); ?>
 	<nav aria-label="breadcrumb" class="container">
 		<ol class="breadcrumb">
                         <!-- en lien ------------------>
-			<li class="breadcrumb-item"><a href="<?php the_field('lien_home'. $version, 'option'); ?>"><?php the_field('libelle_home'. $version, 'option'); ?></a></li>
+			<li class="breadcrumb-item">
+                            <a href="<?php the_field('lien_home'. $version, 'option'); ?>"><?php the_field('libelle_home'. $version, 'option'); ?></a>
+                        </li>
 			<li class="breadcrumb-item active" aria-current="page"><?php the_title(); ?></li>
 		</ol>
 	</nav>
