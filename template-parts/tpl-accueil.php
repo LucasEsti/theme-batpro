@@ -17,6 +17,9 @@ get_header(); ?>
     <!-- Slider -->
     <section id="slider" class="container">
         <div class="row">
+            <div class="col-12">
+                <img src="https://batpro-madagascar.com/wp-content/uploads/2024/12/BATPRO_banniere-fermeture-annuelle-01.webp" class="img-fluid">
+            </div>
             <div class="col-12 owl-carousel owl-theme">
                 
                 <?php if( get_field('banniere_promo') ): ?>
@@ -44,7 +47,7 @@ get_header(); ?>
                     endwhile; ?>
                 <?php endif; ?>
             </div>
-
+            
         </div>
     </section>
     
