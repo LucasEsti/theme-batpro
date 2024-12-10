@@ -149,7 +149,7 @@ if (get_field('version_page') == "en") {
 
 <!--<script src="<?php bloginfo("template_url");  ?>/js/bootstrap.min.js"></script>-->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <!--<script src="<?php bloginfo("template_url");  ?>/js/slick.min.js"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -169,6 +169,8 @@ if (get_field('version_page') == "en") {
     
     $(document).ready(function() {
         $('[data-toggle="tooltip"]').tooltip();
+        
+        $('#exampleModalCenter').modal('show');
         
         var langue = $("#upline").attr('lang');
         var more = "en savoir plus";

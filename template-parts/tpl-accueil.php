@@ -8,9 +8,12 @@ get_header(); ?>
     <?php 
         $version = "";
         
+        $lien_promo = "https://batpro-madagascar.com/promo-page";
+        $text_promo = "Voir plus";
         if (get_field('version_page') == "en") {
             $version = "_en";
-            
+             $lien_promo = "https://batpro-madagascar.com/promotional-page/";
+              $text_promo = "More";
         }
         ?>
 
@@ -50,6 +53,26 @@ get_header(); ?>
             
         </div>
     </section>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img src="https://batpro-madagascar.com/wp-content/uploads/2024/12/BATPRO-destockage1.webp" class="img-fluid"/>
+      </div>
+      <div class="modal-footer">
+          <a href="<?php echo $lien_promo; ?>" class="bouton-promo"><?php echo $text_promo; ?></a>
+      </div>
+    </div>
+  </div>
+</div>
+
     
     <!-- Contenu Page -->
     <div class="container">

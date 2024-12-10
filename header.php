@@ -73,7 +73,26 @@ $uploadsUrl = $source . "/realtime-batpro/uploads/";
         
     </style>
     
-    
+    <style>
+	
+	.bouton-promo {
+		border: 1px solid #e51f49;
+                padding: 6px 20px;
+                color: #ffffff;
+                background-color: #e51f49;
+                border-radius: 11px;
+	} 
+        
+        .modal-content {
+            background: #00000017;
+            border: none;
+        }
+        
+        .modal-content .close {
+            color: #e51f49;
+        }
+	
+	</style>
     <link rel="stylesheet" href="<?php bloginfo("template_url");  ?>/realtime-batpro/style/chatbox.css">
 </head>
 
