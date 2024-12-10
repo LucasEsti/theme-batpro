@@ -83,10 +83,6 @@ $uploadsUrl = $source . "/realtime-batpro/uploads/";
                 border-radius: 11px;
 	} 
         
-        .modal-content {
-            background: #00000017;
-            border: none;
-        }
         
         .modal-content .close {
             color: #e51f49;
