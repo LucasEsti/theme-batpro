@@ -1,45 +1,24 @@
-<?php get_header(); ?>
+<?php
+/**
+ * Template Name: tpl-destockage
+ */
 
-    <!-- Banniere-->
-    <section id="banniere" class="container">
+get_header(); ?>
 
-        <?php
-            // Display the artist image
-            $queried_object = get_queried_object();
-            $taxonomy = $queried_object->taxonomy;
-            $term_id = $queried_object->term_id;
-            
-            $terms = get_field( 'taxonomy_banniere', $taxonomy.'_'.$term_id);
-            $termsipad = get_field( 'taxonomy_banniere_ipad', $taxonomy.'_'.$term_id);
-            $termsmobile = get_field( 'taxonomy_banniere_mobile', $taxonomy.'_'.$term_id);
-
-            if($queried_object->parent != 0)
-                $terms = get_field( 'taxonomy_banniere', $taxonomy.'_'.$queried_object->parent);
-            if($queried_object->parent != 0)
-                $termsipad = get_field( 'taxonomy_banniere_ipad', $taxonomy.'_'.$queried_object->parent);
-            if($queried_object->parent != 0)
-                $termsmobile = get_field( 'taxonomy_banniere_mobile', $taxonomy.'_'.$queried_object->parent);
-
-            echo '<img src="'. $terms['url'] .'" class="img-fluid desktop">';
-            echo '<img src="'. $termsipad['url'] .'" class="img-fluid ipad">';
-            echo '<img src="'. $termsmobile['url'] .'" class="img-fluid mobile">';
-
+<?php 
+        $version = "";
+        if (get_field('version_page') == "en") {
+            $version = "_en";
+        }
         ?>
-<!--        <div class="content">
-            <div class="titres"><?php //single_cat_title(); ?><?php echo get_queried_object()->name; ?></div>
-        </div>-->
+
+<!-- Banniere-->
+    <section id="banniere" class="container">
+        <img src="<?php the_field('image'); ?>" class="img-fluid desktop">
+        <img src="<?php the_field('image'); ?>" class="img-fluid ipad">
+        <img src="<?php the_field('image'); ?>" class="img-fluid mobile">
     </section>
 
-    <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb" class="container">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#" id="produitsText">Nos produits</a></li>
-          <?php if($queried_object->parent != 0) { ?>
-          <li class="breadcrumb-item"><a href="<?php echo get_term_link(get_term($queried_object->parent)->term_id) ?>"><?php echo get_term($queried_object->parent)->name; ?></a></li>
-          <?php } ?>
-          <li class="breadcrumb-item active" aria-current="page"><?php single_cat_title(); ?></li>
-        </ol>
-    </nav>
 
     <!-- Contenu Page -->
     <div class="container">
@@ -58,9 +37,23 @@
                                   <i class="[ icon  icon--list ]  [ fa  fa-list ]  [ icon ]"></i>
                                 </div>
                                 <div class="products grid group">
-                                <?php // $catlist = new WP_Query(array('post_type' => 'produits', 'orderby' => 'rand', 'posts_per_page' => '20', 'cat_id' => $term_id )); ?>
-	                                <?php // if( $catlist->have_posts() ) : while( $catlist->have_posts() ) : $catlist->the_post(); ?>
-                                    <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+                                <?php // 
+                                $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+                                $references = explode(", ", get_field('liste'));
+                                $catlist = new WP_Query(array(
+                                    'post_type' => 'produits',  
+                                    'posts_per_page' => '20',
+                                    'paged'          => $paged, // Ajout de la pagination
+                                    'meta_query'     => array(
+                                            array(
+                                                'key'     => 'references', // Nom du champ ACF
+                                                'value'   => $references, // Tableau de références
+                                                'compare' => 'IN',        // Recherche les produits avec une référence dans le tableau
+                                            ),
+                                        ),
+                                    )); ?>
+	                                <?php if( $catlist->have_posts() ) : while( $catlist->have_posts() ) : $catlist->the_post(); ?>
+                                    <?php // if (have_posts()) : while (have_posts()) : the_post(); ?>
                                         <div class="product">
                                             <div class="content-product-imagin"></div>
                                             <div class="content-product-list"></div>
@@ -120,5 +113,4 @@
             </div>
         </div>
     </div>
-
 <?php get_footer(); ?>
