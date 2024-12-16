@@ -233,6 +233,20 @@ if (get_field('version_page') == "en") {
         } else {
             connex = linkServer + '?type=client';
         }
+        var chat = document.getElementById('chat');
+        
+        
+        //atao commentaire pour fin année
+//        $(".floating-chat").removeClass("hidden");
+//        $(".floating-chat .footer").addClass("hidden");
+//        
+//        var li = document.createElement('li');
+//        li.className = 'other';
+//        li.textContent = "Bonjour ! 🎉\n\nNous tenons à vous informer que notre service est actuellement en pause pour la fermeture annuelle. Nous serons de retour le 5 janvier pour reprendre nos réponses et vous assister avec plaisir.\n\nEn attendant, nos réponses sont suspendues. Nous vous remercions pour votre compréhension et avons hâte de vous retrouver dès la réouverture.\n\nÀ très bientôt et passez de très belles fêtes ! 🎄✨";
+//        chat.appendChild(li);
+//        
+//        var conn = null;
+        
         var conn = new WebSocket(connex);
         
         // Définir l'URL des uploads depuis PHP
@@ -242,7 +256,7 @@ if (get_field('version_page') == "en") {
         }
         
         
-        var chat = document.getElementById('chat');
+        
         var responseInput = document.getElementById('response');
         var sendButton = document.getElementById('sendButton');
         var simpleMessageInput = document.getElementById('simpleMessage');
@@ -508,43 +522,52 @@ if (get_field('version_page') == "en") {
             } else {
                 conn = linkServer + '?type=client';
             }
+            
+            //atao commentaire pour fin 
+//            var conn = null;
+            
             conn = new WebSocket(connex);
             reconnection = 1;
-            conn.onmessage = function(e) {
-                onMessageWebscocket(e);
+            if (conn) {
+                conn.onmessage = function(e) {
+                    onMessageWebscocket(e);
+                };
+
+                conn.onerror = function(error) {
+                    console.log('WebSocket error: ' + error.message);
+                };
+
+                conn.onclose = function() {
+                    reconnectionOnClose();
+                };
+            }
+        }
+        
+        if (conn) {
+            conn.onopen = function() {
+                console.log('WebSocket connection opened');
+                $(".floating-chat").removeClass("hidden");
+                const elementBounce = document.querySelector('.fa-comments');
+                elementBounce.classList.add('animate__animated', 'animate__tada', "animate__delay-3s", "animate__infinite");
+                setInterval(function() {
+                    console.log('Envoi du ping au serveur');
+                    conn.send(JSON.stringify({ type: 'ping' }));
+                }, 120000);
             };
 
+            conn.onclose = function() {
+                console.log('WebSocket is closed now.');
+                reconnectionOnClose();
+            };
             conn.onerror = function(error) {
                 console.log('WebSocket error: ' + error.message);
             };
 
-            conn.onclose = function() {
-                reconnectionOnClose();
+            conn.onmessage = function(e) {
+                onMessageWebscocket(e);
             };
         }
         
-        conn.onopen = function() {
-            console.log('WebSocket connection opened');
-            $(".floating-chat").removeClass("hidden");
-            const elementBounce = document.querySelector('.fa-comments');
-            elementBounce.classList.add('animate__animated', 'animate__tada', "animate__delay-3s", "animate__infinite");
-            setInterval(function() {
-                console.log('Envoi du ping au serveur');
-                conn.send(JSON.stringify({ type: 'ping' }));
-            }, 120000);
-        };
-        
-        conn.onclose = function() {
-            console.log('WebSocket is closed now.');
-            reconnectionOnClose();
-        };
-        conn.onerror = function(error) {
-            console.log('WebSocket error: ' + error.message);
-        };
-        
-        conn.onmessage = function(e) {
-            onMessageWebscocket(e);
-        };
         
        
         setInterval(function() {
@@ -567,8 +590,9 @@ if (get_field('version_page') == "en") {
                     reader.onload = function(e) {
                         var base64File = e.target.result.split(',')[1];
                         dataResp.file = { name: file.name, data: base64File };
-                        
-                        conn.send(JSON.stringify(dataResp));
+                        if (conn) {
+                            conn.send(JSON.stringify(dataResp));
+                        }
                         $('#responseInput').val('');
                     };
                     reader.readAsDataURL(file);
@@ -576,12 +600,16 @@ if (get_field('version_page') == "en") {
                 } else {
                     if (response) {
                         dataResp.response = response;
-                        conn.send(JSON.stringify(dataResp));
+                        if (conn) {
+                            conn.send(JSON.stringify(dataResp));
+                        }
                         $('#responseInput').val('');
                     }
                     
                 }
-                conn.send(JSON.stringify({type: 'client', isReadClient: 1 }));
+                if (conn) {
+                    conn.send(JSON.stringify({type: 'client', isReadClient: 1 }));
+                }
                 newMessage.addClass("hidden");
                 
             }
@@ -592,19 +620,25 @@ if (get_field('version_page') == "en") {
             var message2 = $('#simpleMessageInput').val();
             var file = document.getElementById('fileInputValue').files[0];
             if (message2) {
-                conn.send(JSON.stringify({type: 'client', simple_message: message2 }));
+                if (conn) {
+                    conn.send(JSON.stringify({type: 'client', simple_message: message2 }));
+                }
                 $('#simpleMessageInput').val('');
             }
             if (file) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
                     var base64File = e.target.result.split(',')[1];
-                    conn.send(JSON.stringify({type: 'client', file: { name: file.name, data: base64File } }));
+                    if (conn) {
+                        conn.send(JSON.stringify({type: 'client', file: { name: file.name, data: base64File } }));
+                    }
                 };
                 reader.readAsDataURL(file);
                 $('#fileInputValue').val(''); // Clear the file input
             }
-            conn.send(JSON.stringify({type: 'client', isReadClient: 1 }));
+            if (conn) {
+                conn.send(JSON.stringify({type: 'client', isReadClient: 1 }));
+            }
             newMessage.addClass("hidden");
         }
         
@@ -612,8 +646,10 @@ if (get_field('version_page') == "en") {
         
         function sendChoice(choice) {
             if (currentQuestionId !== null) {
-                conn.send(JSON.stringify({type: 'client', question_id: currentQuestionId, response: choice }));
-                conn.send(JSON.stringify({type: 'client', isReadClient: 1 }));
+                if (conn) {
+                    conn.send(JSON.stringify({type: 'client', question_id: currentQuestionId, response: choice }));
+                    conn.send(JSON.stringify({type: 'client', isReadClient: 1 }));
+                }
                 newMessage.addClass("hidden");
             }
         }
@@ -647,9 +683,11 @@ if (get_field('version_page') == "en") {
             messages.scrollTop(messages.prop("scrollHeight"));
             newMessage.addClass("hidden");
 
-            if (conn.readyState === conn.OPEN) {
-                //vue sur message
-                conn.send(JSON.stringify({type: 'client', isReadClient: 1 }));
+            if (conn) {
+                if (conn.readyState === conn.OPEN) {
+                    //vue sur message
+                    conn.send(JSON.stringify({type: 'client', isReadClient: 1 }));
+                }
             }
 
         }

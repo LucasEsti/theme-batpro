@@ -50,7 +50,7 @@ get_header(); ?>
                                                 'value'   => $references, // Tableau de références
                                                 'compare' => 'IN',        // Recherche les produits avec une référence dans le tableau
                                             ),
-                                        ),
+                                            ),
                                     )); ?>
 	                                <?php if( $catlist->have_posts() ) : while( $catlist->have_posts() ) : $catlist->the_post(); ?>
                                     <?php // if (have_posts()) : while (have_posts()) : the_post(); ?>

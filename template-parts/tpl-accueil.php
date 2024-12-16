@@ -30,6 +30,13 @@ get_header(); ?>
                         <img src="<?php the_field('banniere_promo'); ?>" class="img-fluid">
                     </div>
                 <?php endif; ?>
+                
+                <?php if( get_field('banniere_destockage') ): ?>
+                    <div class="item">
+                        <img src="<?php the_field('banniere_destockage'); ?>" class="img-fluid">
+                    </div>
+                <?php endif; ?>
+                
                 <?php if( have_rows('slider_section1') ): 
                     $i = 0;
                     $random_number_array = range(0, 6);
