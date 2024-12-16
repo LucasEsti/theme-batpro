@@ -15,8 +15,8 @@ get_header(); ?>
 <!-- Banniere-->
     <section id="banniere" class="container">
         <img src="<?php the_field('image'); ?>" class="img-fluid desktop">
-        <img src="<?php the_field('image'); ?>" class="img-fluid ipad">
-        <img src="<?php the_field('image'); ?>" class="img-fluid mobile">
+        <img src="<?php the_field('images_mobile'); ?>" class="img-fluid ipad">
+        <img src="<?php the_field('images_mobile'); ?>" class="img-fluid mobile">
     </section>
 
 
