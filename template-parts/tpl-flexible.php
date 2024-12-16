@@ -20,7 +20,7 @@ if( have_rows('page_dynamique') ): ?>
                 <img src="<?php the_sub_field('image_banniere_page'); ?>" class="img-fluid desktop">
             <?php endif; ?>
             <img class="img-fluid mobile" src="<?php the_sub_field("images_mobile"); ?>" alt="Banniere">
-            <img class="img-fluid ipad" src="<?php the_sub_field("images_ipad"); ?>" alt="Banniere">
+            <img class="img-fluid ipad" src="<?php the_sub_field("images_mobile"); ?>" alt="Banniere">
 
 <!--            <div class="content">
                 <div class="titres"><?php // the_title(); ?></div>
