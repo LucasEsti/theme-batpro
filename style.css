@@ -82,6 +82,16 @@ button.remove {
   width: 100%;
 }
 
+#menu-item-31561 a, #menu-item-46240 a {
+   font-weight: bold;
+   color: #45FFF6;
+}
+
+#menu-item-61468 a, #menu-item-61467 a {
+   font-weight: bold;
+   color: #F9FF03;
+}
+
 .ginput_container input {
   border-radius: 7px;
   border: none;
