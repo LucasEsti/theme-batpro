@@ -102,13 +102,13 @@ button.remove {
 #menu-item-31561 a, #menu-item-46240 a {
    font-weight: bold;
    color: #45FFF6;
-   animation: pulse 1.5s infinite;
+   animation: pulse 0.5s infinite;
 }
 
 #menu-item-61468 a, #menu-item-61467 a {
    font-weight: bold;
    color: #F9FF03;
-   animation: pulse 1.5s infinite;
+   animation: pulse 0.5s infinite;
 }
 
 .ginput_container input {
