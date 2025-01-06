@@ -237,17 +237,17 @@ if (get_field('version_page') == "en") {
         
         
         //atao commentaire pour fin année
-        $(".floating-chat").removeClass("hidden");
-        $(".floating-chat .footer").addClass("hidden");
+//        $(".floating-chat").removeClass("hidden");
+//        $(".floating-chat .footer").addClass("hidden");
+//        
+//        var li = document.createElement('li');
+//        li.className = 'other';
+//        li.textContent = "Bonjour ! 🎉\n\nNous tenons à vous informer que notre service est actuellement en pause pour la fermeture annuelle. Nous serons de retour le 5 janvier pour reprendre nos réponses et vous assister avec plaisir.\n\nEn attendant, nos réponses sont suspendues. Nous vous remercions pour votre compréhension et avons hâte de vous retrouver dès la réouverture.\n\nÀ très bientôt et passez de très belles fêtes ! 🎄✨";
+//        chat.appendChild(li);
+//        
+//        var conn = null;
         
-        var li = document.createElement('li');
-        li.className = 'other';
-        li.textContent = "Bonjour ! 🎉\n\nNous tenons à vous informer que notre service est actuellement en pause pour la fermeture annuelle. Nous serons de retour le 5 janvier pour reprendre nos réponses et vous assister avec plaisir.\n\nEn attendant, nos réponses sont suspendues. Nous vous remercions pour votre compréhension et avons hâte de vous retrouver dès la réouverture.\n\nÀ très bientôt et passez de très belles fêtes ! 🎄✨";
-        chat.appendChild(li);
-        
-        var conn = null;
-        
-//        var conn = new WebSocket(connex);
+        var conn = new WebSocket(connex);
         
         // Définir l'URL des uploads depuis PHP
         const uploadsUrl = '<?php echo $uploadsUrl; ?>';
@@ -524,9 +524,9 @@ if (get_field('version_page') == "en") {
             }
             
             //atao commentaire pour fin 
-            var conn = null;
+//            var conn = null;
             
-//            conn = new WebSocket(connex);
+            conn = new WebSocket(connex);
             reconnection = 1;
             if (conn) {
                 conn.onmessage = function(e) {
