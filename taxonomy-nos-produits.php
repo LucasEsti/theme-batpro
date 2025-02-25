@@ -101,7 +101,8 @@
                             </div>
                         </div>
                         <div class="col-sm-12 text-center">
-                            <?php wp_pagenavi(array('query' => $catlist));?>
+                            <?php wp_pagenavi();?>
+                            <?php //wp_pagenavi(array('query' => $catlist));?>
                         </div>
                         <?php endif; ?>
                     </div>
