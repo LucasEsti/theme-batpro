@@ -71,7 +71,7 @@ get_header(); ?>
         </button>
       </div>
       <div class="modal-body">
-        <img src="https://batpro-madagascar.com/wp-content/uploads/2024/12/BATPRO-destockage1.webp" class="img-fluid"/>
+        <img src="https://batpro-madagascar.com/wp-content/uploads/2025/03/valnyl.webp" class="img-fluid"/>
       </div>
       <div class="modal-footer">
           <a href="<?php echo $lien_promo; ?>" class="bouton-promo"><?php echo $text_promo; ?></a>
