@@ -12,6 +12,7 @@ get_header('admin'); ?>
                 </div>
                 <ul id="listPeople" class="people">
                 </ul>
+                <button id="loadMoreBtn">Afficher plus</button>
             </div>
 
 

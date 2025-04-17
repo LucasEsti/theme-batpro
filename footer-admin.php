@@ -73,6 +73,9 @@
             connex = linkServer + '?type=admin';
         }
         
+        let pagination = 0;
+        const limit = 10; // Même limite que côté serveur
+        
         function isObject(value) {
             return value !== null && typeof value === 'object' && value.constructor === Object;
         }
@@ -277,8 +280,11 @@
 
                       }
                   
-                        document.getElementById('client-' + idFirstElement).classList.add('active');
-                        document.getElementById('messages-' + idFirstElement).classList.add('active-chat');
+                        if (data.pagination === 0) {
+                           document.getElementById('client-' + idFirstElement).classList.add('active');
+                           document.getElementById('messages-' + idFirstElement).classList.add('active-chat');
+                        }
+                        
 
                         var container = $('#messageContainer');
                         var target = $('#input-' + document.getElementById('messageContainer').children[1].getAttribute("data-chat"));
@@ -440,6 +446,19 @@
                 ws.send(JSON.stringify({ type: 'ping' }));
             }, 120000);
         };
+        
+        document.getElementById('loadMoreBtn').addEventListener('click', function () {
+            pagination++; // Incrémente la page
+            console.log(pagination);
+            ws.send(JSON.stringify({
+                type: 'admin',
+                
+                action: 'getListMessages',
+                pagination: pagination,
+                limit: limit
+            }));
+        });
+        
         
         ws.onclose = function() {
             console.log('WebSocket is closed now.');
