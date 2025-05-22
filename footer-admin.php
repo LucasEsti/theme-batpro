@@ -56,6 +56,8 @@
     ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script>
+        let actionSearch = false;
+        let searchText = "";
        function playNotificationSound() {
             var sound = document.getElementById('notification-sound');
             sound.play();
@@ -186,7 +188,6 @@
         
         function onMessageWebscocket(e) {
             var data = JSON.parse(e.data);
-            console.log(data);
             
             if (data.type === 'id') {
                 $.cookie('adminId', data.id, { expires: 7, path: '/' });
@@ -196,7 +197,11 @@
                 console.log('Pong reçu du serveur');
             }
             
-            if (data.type === 'listMessages' && reconnection == 0) {
+            if ((data.type === 'listMessages' || data.type === 'searchByName') && reconnection == 0) {
+                if (data.type === 'searchByName' && data.pagination == 0) {
+                    //reinitialiser
+                    document.querySelectorAll('.clientSection, .person').forEach(el => el.remove());
+                }
                 messages = data.message;
                 if (data.message.length != 0) {
                     var idFirstElement = "";
@@ -447,17 +452,7 @@
             }, 120000);
         };
         
-        document.getElementById('loadMoreBtn').addEventListener('click', function () {
-            pagination++; // Incrémente la page
-            console.log(pagination);
-            ws.send(JSON.stringify({
-                type: 'admin',
-                
-                action: 'getListMessages',
-                pagination: pagination,
-                limit: limit
-            }));
-        });
+        
         
         
         ws.onclose = function() {
@@ -570,6 +565,61 @@
               }
 
           }
+          
+          document.getElementById('loadMoreBtn').addEventListener('click', function () {
+            pagination++; // Incrémente la page
+            console.log(pagination);
+            if (actionSearch == false) {
+                ws.send(JSON.stringify({
+                    type: 'admin',
+                    action: 'getListMessages',
+                    pagination: pagination,
+                    limit: limit
+                }));
+            } else {
+                
+                if (document.getElementById('searchInput').value == searchText) {
+                    ws.send(JSON.stringify({
+                        type: 'admin',
+                        action: 'searchByName',
+                        pagination: pagination,
+                        limit: limit,
+                        search: searchText,
+                    }));
+                }
+                
+            }
+            
+        });
+          
+        function rechercher() {
+              const search = document.getElementById('searchInput').value;
+              pagination = 0;
+              if (search != "") {
+                    document.getElementById("reset").disabled = false;
+                    ws.send(JSON.stringify({ type: 'admin', 
+                        action: 'searchByName', 
+                        search: search,
+                    }));
+                    searchText = search;
+                    actionSearch = true;
+              }
+        }
+          
+        function reinitialiser() {
+            pagination = 0;
+            actionSearch = false;
+            document.querySelectorAll('.clientSection, .person').forEach(el => el.remove());
+            ws.send(JSON.stringify({
+                type: 'admin',
+                action: 'getListMessages',
+                pagination: 0,
+                limit: limit
+            }));
+            searchText = "";
+            document.getElementById("searchInput").value = "";
+            document.getElementById("reset").disabled = true;
+        }
           
     </script>
 </body>
