@@ -111,6 +111,12 @@ button.remove {
    animation: pulse 0.5s infinite;
 }
 
+#menu-item-72149 a, #menu-item-72151 a {
+    font-weight: bold;
+  color: #089d51;
+  animation: headShake 2s infinite;
+}
+
 .ginput_container input {
   border-radius: 7px;
   border: none;
