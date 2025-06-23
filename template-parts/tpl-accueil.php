@@ -8,11 +8,11 @@ get_header(); ?>
     <?php 
         $version = "";
         
-        $lien_promo = "https://batpro-madagascar.com/promo-page";
+        $lien_promo = "https://batpro-electricity.mg/";
         $text_promo = "Voir plus";
         if (get_field('version_page') == "en") {
             $version = "_en";
-             $lien_promo = "https://batpro-madagascar.com/promotional-page/";
+             $lien_promo = "https://batpro-electricity.mg/";
               $text_promo = "More";
         }
         ?>
