@@ -76,7 +76,7 @@ get_header(); ?>
         <img src="<?php the_field('image_popup', 'option'); ?>" class="img-fluid"/>
       </div>
       <div class="modal-footer">
-          <a href="<?php echo $lien_promo; ?>" class="bouton-promo"><?php echo $text_promo; ?></a>
+          <a href="<?php echo $lien_promo; ?>" target="_blank" class="bouton-promo"><?php echo $text_promo; ?></a>
       </div>
     </div>
   </div>
